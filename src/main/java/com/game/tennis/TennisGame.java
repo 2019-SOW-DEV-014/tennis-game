@@ -21,11 +21,14 @@ public class TennisGame {
             scoreText = "love";
         } else if (score == 15) {
             scoreText = "fifteen";
+        } else if (score == 30) {
+            scoreText = "thirty";
         } else {
-            if (score == 30) {
-                scoreText = "thirty";
+            if (score == 40) {
+                scoreText = "forty";
             }
         }
+
         return scoreText;
     }
 
