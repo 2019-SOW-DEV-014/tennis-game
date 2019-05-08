@@ -19,9 +19,11 @@ public class TennisGame {
         String scoreText = null;
         if (score == 0) {
             scoreText = "love";
+        } else if (score == 15) {
+            scoreText = "fifteen";
         } else {
-            if (score == 15) {
-                scoreText = "fifteen";
+            if (score == 30) {
+                scoreText = "thirty";
             }
         }
         return scoreText;
