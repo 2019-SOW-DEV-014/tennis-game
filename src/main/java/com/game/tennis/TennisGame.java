@@ -1,6 +1,8 @@
 package com.game.tennis;
 
 import com.game.tennis.constants.Score;
+import com.game.tennis.model.input.GameRequest;
+import com.game.tennis.util.Pair;
 
 public class TennisGame {
 
@@ -34,4 +36,9 @@ public class TennisGame {
         return playerOneScore == playerTwoScore;
     }
 
+    public String scoreBoard(GameRequest gameRequest) {
+        Pair<Score, Score> scorePair = gameRequest.getScorePair();
+        return scoreBoard(scorePair.getFirst(), scorePair.getSecond());
+
+    }
 }
