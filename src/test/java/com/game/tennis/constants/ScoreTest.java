@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ScoreTest {
 
-    Score result;
+    private Score result;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
