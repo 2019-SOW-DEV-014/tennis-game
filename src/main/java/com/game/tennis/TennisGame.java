@@ -1,5 +1,7 @@
 package com.game.tennis;
 
+import com.game.tennis.constants.Score;
+
 public class TennisGame {
 
     public String scoreBoard(int playerOneScore, int playerTwoScore) {
@@ -8,8 +10,8 @@ public class TennisGame {
             return "love-all";
         }
 
-        String score1 = getTextForScore(playerOneScore);
-        String score2 = getTextForScore(playerTwoScore);
+        Score score1 = Score.getScoreFor(playerOneScore);
+        Score score2 = Score.getScoreFor(playerTwoScore);
 
         return score1 + "-" + score2;
 

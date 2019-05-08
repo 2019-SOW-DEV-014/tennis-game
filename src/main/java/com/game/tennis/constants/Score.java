@@ -1,7 +1,7 @@
 package com.game.tennis.constants;
 
 public enum Score {
-    LOVE("love", 0), FIFTEEN("fifteen", 15), THIRTY("thirty", 30), FORTY("forty", 40);
+    love("love", 0), fifteen("fifteen", 15), thirty("thirty", 30), forty("forty", 40);
 
     private String text;
     private int value;
@@ -25,6 +25,6 @@ public enum Score {
                 return s;
             }
         }
-        return LOVE;
+        return love;
     }
 }
