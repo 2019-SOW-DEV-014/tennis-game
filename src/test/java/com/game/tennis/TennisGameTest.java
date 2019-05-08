@@ -13,4 +13,12 @@ public class TennisGameTest {
 
     }
 
+    @Test
+    public void shouldReturnLoveFifteenWhenInputScoreIsAt0_15() {
+        TennisGame game = new TennisGame();
+        assertEquals("love-fifteen", game.scoreBoard(0, 15));
+
+    }
+
+
 }
