@@ -25,6 +25,6 @@ public enum Score {
                 return s;
             }
         }
-        return love;
+        throw new IllegalArgumentException("Invalid input score: " + score);
     }
 }

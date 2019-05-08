@@ -1,6 +1,8 @@
 package com.game.tennis.constants;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static com.game.tennis.constants.Score.*;
 import static org.junit.Assert.assertEquals;
@@ -8,6 +10,9 @@ import static org.junit.Assert.assertEquals;
 public class ScoreTest {
 
     Score result;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldReturnZeroFor0(){
@@ -35,6 +40,14 @@ public class ScoreTest {
         result = Score.getScoreFor(40);
 
         assertEquals(forty, result);
+    }
+
+    @Test
+    public void shouldExpectIllegalArgumentExceptionFor45(){
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Invalid input score: 45");
+
+        result = Score.getScoreFor(45);
     }
 
 }
