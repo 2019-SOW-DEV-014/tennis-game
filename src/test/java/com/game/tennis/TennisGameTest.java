@@ -1,5 +1,6 @@
 package com.game.tennis;
 
+import com.game.tennis.model.input.GameRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,9 @@ public class TennisGameTest {
 
     @Test
     public void shouldReturnLoveAllWhenInputScoreIsAt0_0() {
+        GameRequest gameRequest = new GameRequest();
+        gameRequest.setScorePair(love, love);
+
         assertEquals("love-all", game.scoreBoard(love, love));
     }
 
