@@ -20,6 +20,11 @@ public enum Score {
     }
 
     public static Score getScoreFor(int score) {
+        for(Score s : values()){
+            if(s.getValue() == score){
+                return s;
+            }
+        }
         return LOVE;
     }
 }
