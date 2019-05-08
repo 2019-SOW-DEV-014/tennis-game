@@ -4,12 +4,9 @@ import com.game.tennis.constants.Score;
 
 public class TennisGame {
 
-    public String scoreBoard(int playerOneScore, int playerTwoScore) {
+    public String scoreBoard(Score playerOneScore, Score playerTwoScore) {
 
-        Score score1 = Score.getScoreFor(playerOneScore);
-        Score score2 = Score.getScoreFor(playerTwoScore);
-
-        return getScoreText(score1, score2);
+        return getScoreText(playerOneScore, playerTwoScore);
 
     }
 
