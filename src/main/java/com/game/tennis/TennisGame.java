@@ -4,6 +4,9 @@ import com.game.tennis.constants.Score;
 import com.game.tennis.model.input.GameRequest;
 import com.game.tennis.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TennisGame {
 
     public String scoreBoard(Score playerOneScore, Score playerTwoScore) {
@@ -36,9 +39,14 @@ public class TennisGame {
         return playerOneScore == playerTwoScore;
     }
 
-    public String scoreBoard(GameRequest gameRequest) {
-        Pair<Score, Score> scorePair = gameRequest.getScorePair();
-        return scoreBoard(scorePair.getFirst(), scorePair.getSecond());
+    public List<String> scoreBoard(GameRequest gameRequest) {
+        List<String> scoreBoardResult = new ArrayList<String>();
+        List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
 
+        for (Pair<Score, Score> scorePair : scorePairs) {
+            String scoreText = scoreBoard(scorePair.getFirst(), scorePair.getSecond());
+            scoreBoardResult.add(scoreText);
+        }
+        return scoreBoardResult;
     }
 }

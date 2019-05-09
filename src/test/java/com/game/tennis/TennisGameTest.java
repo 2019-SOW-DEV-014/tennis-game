@@ -4,13 +4,17 @@ import com.game.tennis.model.input.GameRequest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static com.game.tennis.constants.Score.*;
+import static com.game.tennis.util.Pair.asPair;
 import static org.junit.Assert.assertEquals;
 
 public class TennisGameTest {
 
     private TennisGame game;
     private GameRequest gameRequest;
+    private List<String> scoreBoard;
     @Before
     public void initialise() {
         game = new TennisGame();
@@ -19,44 +23,58 @@ public class TennisGameTest {
 
     @Test
     public void shouldReturnLoveAllWhenInputScoreIsAt0_0() {
-        gameRequest.setScorePair(love, love);
+        gameRequest.addScorePair(asPair(love, love));
 
-        assertEquals("love-all", game.scoreBoard(gameRequest));
+        scoreBoard = game.scoreBoard(gameRequest);
+        assertEquals("love-all", scoreBoard.get(0));
     }
 
     @Test
     public void shouldReturnLoveFifteenWhenInputScoreIsAt0_15() {
-        gameRequest.setScorePair(love, fifteen);
+        gameRequest.addScorePair(asPair(love, fifteen));
+        scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("love-fifteen", game.scoreBoard(gameRequest));
+        assertEquals("love-fifteen", scoreBoard.get(0));
     }
 
     @Test
     public void shouldReturnFifteenThirtyWhenInputScoreIsAt15_30() {
-        gameRequest.setScorePair(fifteen, thirty);
+        gameRequest.addScorePair(asPair(fifteen, thirty));
+        scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("fifteen-thirty", game.scoreBoard(gameRequest));
+        assertEquals("fifteen-thirty", scoreBoard.get(0));
     }
 
     @Test
     public void shouldReturnFortyFifteenWhenInputScoreIsAt40_15() {
-        gameRequest.setScorePair(forty, fifteen);
+        gameRequest.addScorePair(asPair(forty, fifteen));
+        scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("forty-fifteen", game.scoreBoard(gameRequest));
+        assertEquals("forty-fifteen", scoreBoard.get(0));
     }
 
     @Test
     public void shouldReturnFifteenAllWhenInputScoreIsAt15_15() {
-        gameRequest.setScorePair(fifteen, fifteen);
+        gameRequest.addScorePair(asPair(fifteen, fifteen));
+        scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("fifteen-all", game.scoreBoard(gameRequest));
+        assertEquals("fifteen-all", scoreBoard.get(0));
     }
 
     @Test
     public void shouldReturnDeuceWhenInputScoreIsAt40_40() {
-        gameRequest.setScorePair(forty, forty);
+        gameRequest.addScorePair(asPair(forty, forty));
+        scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("deuce", game.scoreBoard(gameRequest));
+        assertEquals("deuce", scoreBoard.get(0));
+    }
+
+    @Test
+    public void shouldReturnDeuceWhenInputScoreIsAt40_40AsPair() {
+        gameRequest.addScorePair(asPair(forty, forty));
+        scoreBoard = game.scoreBoard(gameRequest);
+
+        assertEquals("deuce", scoreBoard.get(0));
     }
 
 

@@ -3,9 +3,17 @@ package com.game.tennis.model.input;
 import com.game.tennis.constants.Score;
 import com.game.tennis.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameRequest {
 
     private Pair<Score, Score> scorePair;
+    private final List<Pair<Score, Score>> scorePairs;
+
+    public GameRequest() {
+        scorePairs = new ArrayList<Pair<Score, Score>>();
+    }
 
     public void setScorePair(Pair<Score, Score> scorePair) {
         this.scorePair = scorePair;
@@ -18,5 +26,13 @@ public class GameRequest {
 
     public Pair<Score, Score> getScorePair() {
         return scorePair;
+    }
+
+    public void addScorePair(Pair<Score, Score> scorePair) {
+        scorePairs.add(scorePair);
+    }
+
+    public List<Pair<Score, Score>> getScorePairs() {
+        return scorePairs;
     }
 }
