@@ -13,10 +13,9 @@ public class GameRequestTest {
     @Test
     public void shouldReturnLoveFifteenWhenScorePairIs0_15(){
         GameRequest gameRequest = new GameRequest();
-        Pair<Score, Score> scorePair = new Pair<Score, Score>(love, fifteen);
-        gameRequest.setScorePair(scorePair.getFirst(), scorePair.getSecond());
+        gameRequest.addScorePair(Pair.asPair(love, fifteen));
 
-        Pair<Score, Score> pair = gameRequest.getScorePair();
+        Pair<Score, Score> pair = gameRequest.getScorePairs().get(0);
 
         assertEquals(0, pair.getFirst().getValue());
         assertEquals(15, pair.getSecond().getValue());

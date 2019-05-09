@@ -21,15 +21,6 @@ public class GameRequest {
         this.scorePair = scorePair;
     }
 
-    public void setScorePair(Score score1, Score score2) {
-        Pair<Score, Score> scorePair = new Pair<Score, Score>(score1, score2);
-        setScorePair(scorePair);
-    }
-
-    public Pair<Score, Score> getScorePair() {
-        return scorePair;
-    }
-
     public void setPlayers(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
