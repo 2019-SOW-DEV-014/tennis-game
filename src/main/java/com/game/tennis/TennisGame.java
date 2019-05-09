@@ -22,7 +22,16 @@ class TennisGame {
         List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
 
         addPointsTillGameBall(scores, scorePairs);
-        addPointsFromDeuceIfAny(scores, gameRequest);
+
+        Player playerOne = gameRequest.getPlayerOne();
+        Player playerTwo = gameRequest.getPlayerTwo();
+
+        Pair<Score, Score> lastScorePair = gameRequest.getScorePairs().get(gameRequest.getScorePairs().size() - 1);
+        boolean hasPlayerOneScoredForty = lastScorePair.getFirst().equals(forty);
+        boolean hasPlayerTwoScoredForty = lastScorePair.getSecond().equals(forty);
+        if ((hasPlayerOneScoredForty || hasPlayerTwoScoredForty) && !(playerOne.getNoOfWinsAfterForty() == 0 && playerTwo.getNoOfWinsAfterForty() == 0)) {
+            addPointsFromDeuceIfAny(scores, gameRequest);
+        }
 
         scoreBoard.setPoints(scores);
 
@@ -30,7 +39,6 @@ class TennisGame {
     }
 
     private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {
-
         for (Pair<Score, Score> scorePair : scorePairs) {
             String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
             scores.add(scoreText);
@@ -66,11 +74,7 @@ class TennisGame {
     }
 
     private void addPointsFromDeuceIfAny(List<String> points, GameRequest gameRequest) {
-        Player playerOne = gameRequest.getPlayerOne();
-        Player playerTwo = gameRequest.getPlayerTwo();
-
-        int playerOneLeadDifference = playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty();
-        String gameStatus = getCurrentGameStatus(playerOneLeadDifference, gameRequest);
+        String gameStatus = getCurrentGameStatus(gameRequest);
 
         if (gameStatus == null) {
             throw new IllegalArgumentException("Lead by value is invalid for one of the player");
@@ -79,7 +83,7 @@ class TennisGame {
         points.add(gameStatus);
     }
 
-    private String getCurrentGameStatus(int playerOneLeadDifference, GameRequest gameRequest) {
+    private String getCurrentGameStatus(GameRequest gameRequest) {
         String pointText = null;
         Player playerOne = gameRequest.getPlayerOne();
         Player playerTwo = gameRequest.getPlayerTwo();
@@ -96,12 +100,12 @@ class TennisGame {
                 (!hasPlayerOneScoredForty && hasPlayerTwoScoredForty
                         && (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1))) {
             pointText = playerTwo.getName() + "-" + "won";
-        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 0) {
+        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 0 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
             pointText = "deuce";
-        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1) {
+        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
             pointText = playerOne.getName() + "-" + "advantage";
         } else {
-            if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1) {
+            if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
                 pointText = playerTwo.getName() + "-" + "advantage";
             }
         }
@@ -109,11 +113,4 @@ class TennisGame {
         return pointText;
     }
 
-    private boolean isPlayerTwoWinner(int playerOneLeadDifference) {
-        return playerOneLeadDifference == -2;
-    }
-
-    private boolean isPlayerOneWinner(int playerOneLeadDifference) {
-        return playerOneLeadDifference == 2;
-    }
 }
