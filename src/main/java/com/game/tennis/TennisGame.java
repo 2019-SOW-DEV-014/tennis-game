@@ -92,25 +92,50 @@ class TennisGame {
         boolean hasPlayerOneScoredForty = lastScorePair.getFirst().equals(forty);
         boolean hasPlayerTwoScoredForty = lastScorePair.getSecond().equals(forty);
 
-        if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 2 ||
-                (hasPlayerOneScoredForty && !hasPlayerTwoScoredForty
-                        && (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1))) {
+        if (hasPlayerOneWon(playerOne, playerTwo, hasPlayerOneScoredForty, hasPlayerTwoScoredForty)) {
             pointText = playerOne.getName() + "-" + "won";
-        } else if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 2 ||
-                (!hasPlayerOneScoredForty && hasPlayerTwoScoredForty
-                        && (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1))) {
+        } else if (hasPlayerTwoWon(playerOne, playerTwo, hasPlayerOneScoredForty, hasPlayerTwoScoredForty)) {
             pointText = playerTwo.getName() + "-" + "won";
-        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 0 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
+        } else if (isScoreCameBackToDeuce(playerOne, playerTwo, hasPlayerOneScoredForty, hasPlayerTwoScoredForty)) {
             pointText = "deuce";
-        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
+        } else if (isPlayerOneOnAdvantage(playerOne, playerTwo, hasPlayerOneScoredForty, hasPlayerTwoScoredForty)) {
             pointText = playerOne.getName() + "-" + "advantage";
         } else {
-            if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1 && hasPlayerOneScoredForty && hasPlayerTwoScoredForty) {
+            if (isPlayerTwoOnAdvantage(playerOne, playerTwo, hasPlayerOneScoredForty, hasPlayerTwoScoredForty)) {
                 pointText = playerTwo.getName() + "-" + "advantage";
             }
         }
 
         return pointText;
+    }
+
+    private boolean hasPlayerOneWon(Player playerOne, Player playerTwo, boolean hasPlayerOneScoredForty,
+                                    boolean hasPlayerTwoScoredForty) {
+        return playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 2 ||
+                (hasPlayerOneScoredForty && !hasPlayerTwoScoredForty
+                        && (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1));
+    }
+
+    private boolean hasPlayerTwoWon(Player playerOne, Player playerTwo, boolean hasPlayerOneScoredForty,
+                                    boolean hasPlayerTwoScoredForty) {
+        return playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 2 ||
+                (!hasPlayerOneScoredForty && hasPlayerTwoScoredForty
+                        && (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1));
+    }
+
+    private boolean isScoreCameBackToDeuce(Player playerOne, Player playerTwo, boolean hasPlayerOneScoredForty, boolean hasPlayerTwoScoredForty) {
+        return playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 0
+                && hasPlayerOneScoredForty && hasPlayerTwoScoredForty;
+    }
+
+    private boolean isPlayerTwoOnAdvantage(Player playerOne, Player playerTwo, boolean hasPlayerOneScoredForty, boolean hasPlayerTwoScoredForty) {
+        return playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1
+                && hasPlayerOneScoredForty && hasPlayerTwoScoredForty;
+    }
+
+    private boolean isPlayerOneOnAdvantage(Player playerOne, Player playerTwo, boolean hasPlayerOneScoredForty, boolean hasPlayerTwoScoredForty) {
+        return playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1
+                && hasPlayerOneScoredForty && hasPlayerTwoScoredForty;
     }
 
 }
