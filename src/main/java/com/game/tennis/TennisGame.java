@@ -9,7 +9,8 @@ import java.util.List;
 
 class TennisGame {
 
-    TennisGame(){}
+    TennisGame() {
+    }
 
     private String scoreBoard(Score playerOneScore, Score playerTwoScore) {
 

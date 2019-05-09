@@ -15,6 +15,7 @@ public class TennisGameTest {
     private TennisGame game;
     private GameRequest gameRequest;
     private List<String> scoreBoard;
+
     @Before
     public void initialise() {
         game = new TennisGame();
@@ -70,12 +71,13 @@ public class TennisGameTest {
     }
 
     @Test
-    public void shouldReturnDeuceWhenInputScoreIsAt40_40AsPair() {
-        gameRequest.addScorePair(asPair(forty, forty));
+    public void shouldReturnLoveAllAndLoveFifteenFor_Point_love_love_and_Point_love_fifteen() {
+        gameRequest.addScorePair(asPair(love,love));
+        gameRequest.addScorePair(asPair(love,fifteen));
         scoreBoard = game.scoreBoard(gameRequest);
 
-        assertEquals("deuce", scoreBoard.get(0));
+        assertEquals("love-all", scoreBoard.get(0));
+        assertEquals("love-fifteen", scoreBoard.get(1));
     }
-
 
 }
