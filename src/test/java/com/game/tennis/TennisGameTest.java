@@ -27,10 +27,12 @@ public class TennisGameTest {
         gameRequest = new GameRequest();
         playerOne = new Player();
         playerTwo = new Player();
+
+        gameRequest.setPlayers(playerOne, playerTwo);
     }
 
     @Test
-    public void shouldReturnLoveAllWhenInputScoreIsAt0_0() {
+    public void shouldReturnloveAllWhenInputScoreIsAt0_0() {
         gameRequest.addScorePair(asPair(love, love));
         scoreBoard = game.getScoreBoard(gameRequest);
         scores = scoreBoard.getPoints();
@@ -110,6 +112,54 @@ public class TennisGameTest {
         assertEquals("love-thirty", scores.get(2));
         assertEquals("love-forty", scores.get(3));
         assertEquals("Frederer-advantage", scores.get(4));
+    }
+
+    @Test
+    public void pointsShouldContainPlayer2AdvantageWhenNoOfWinsAfterFortyIs2ForPlayer2And1ForPlayer1() {
+        gameRequest.addScorePair(asPair(love, love));
+        gameRequest.addScorePair(asPair(fifteen, love));
+        gameRequest.addScorePair(asPair(fifteen, fifteen));
+        gameRequest.addScorePair(asPair(fifteen, thirty));
+        gameRequest.addScorePair(asPair(thirty, thirty));
+        gameRequest.addScorePair(asPair(thirty, forty));
+        gameRequest.addScorePair(asPair(forty, forty));
+        playerOne.setNoOfWinsAfterForty(2);
+        playerTwo.setNoOfWinsAfterForty(1);
+        scoreBoard = game.getScoreBoard(gameRequest);
+        scores = scoreBoard.getPoints();
+
+        assertEquals("love-all", scores.get(0));
+        assertEquals("fifteen-love", scores.get(1));
+        assertEquals("fifteen-all", scores.get(2));
+        assertEquals("fifteen-thirty", scores.get(3));
+        assertEquals("thirty-all", scores.get(4));
+        assertEquals("thirty-forty", scores.get(5));
+        assertEquals("deuce", scores.get(6));
+        assertEquals("Nadal-advantage", scores.get(7));
+    }
+
+    @Test
+    public void scoresShouldContainDeuceWhenNoOfWinsAfterFortyIsEqualForPlayer1AndPlayer2() {
+        gameRequest.addScorePair(asPair(love, love));
+        gameRequest.addScorePair(asPair(fifteen, love));
+        gameRequest.addScorePair(asPair(fifteen, fifteen));
+        gameRequest.addScorePair(asPair(fifteen, thirty));
+        gameRequest.addScorePair(asPair(thirty, thirty));
+        gameRequest.addScorePair(asPair(thirty, forty));
+        gameRequest.addScorePair(asPair(forty, forty));
+        playerOne.setNoOfWinsAfterForty(2);
+        playerTwo.setNoOfWinsAfterForty(2);
+        scoreBoard = game.getScoreBoard(gameRequest);
+        scores = scoreBoard.getPoints();
+
+        assertEquals("love-all", scores.get(0));
+        assertEquals("fifteen-love", scores.get(1));
+        assertEquals("fifteen-all", scores.get(2));
+        assertEquals("fifteen-thirty", scores.get(3));
+        assertEquals("thirty-all", scores.get(4));
+        assertEquals("thirty-forty", scores.get(5));
+        assertEquals("deuce", scores.get(6));
+        assertEquals("deuce", scores.get(7));
     }
 
 }

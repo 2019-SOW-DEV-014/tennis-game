@@ -2,6 +2,7 @@ package com.game.tennis;
 
 import com.game.tennis.constants.Score;
 import com.game.tennis.model.input.GameRequest;
+import com.game.tennis.model.input.Player;
 import com.game.tennis.model.output.ScoreBoard;
 import com.game.tennis.util.Pair;
 
@@ -49,15 +50,30 @@ class TennisGame {
         List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
 
         addPointsTillGameBall(scores, scorePairs);
-        addPointsFromGameBallIfAny(scores);
+        addPointsFromGameBallIfAny(scores, gameRequest);
 
         scoreBoard.setPoints(scores);
 
         return scoreBoard;
     }
 
-    private void addPointsFromGameBallIfAny(List<String> points) {
-        points.add("Frederer-advantage");
+    private void addPointsFromGameBallIfAny(List<String> points, GameRequest gameRequest) {
+        String pointText = null;
+        Player playerOne = gameRequest.getPlayerOne();
+        Player playerTwo = gameRequest.getPlayerTwo();
+
+        int playerOneLeadDifference = playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty();
+        if (playerOneLeadDifference == 0) {
+            pointText = "deuce";
+        } else if (playerOneLeadDifference == 1) {
+            pointText = "Nadal-advantage";
+        } else {
+            if (playerOneLeadDifference == -1) {
+                pointText = "Frederer-advantage";
+            }
+        }
+
+        points.add(pointText);
     }
 
     private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {
