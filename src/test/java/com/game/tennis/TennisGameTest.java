@@ -151,7 +151,7 @@ public class TennisGameTest {
     }
 
     @Test
-    public void scoresShouldContainPlaye2WonWhenNoOfWinsAfterFortyIs3ForPlayer2And1ForPlayer1() {
+    public void scoresShouldContainPlayer2WonWhenNoOfWinsAfterFortyIs1ForPlayer1And3ForPlayer2() {
         addPointPairsToGameRequest();
         playerOne.setNoOfWinsAfterForty(1);
         playerTwo.setNoOfWinsAfterForty(3);
@@ -166,6 +166,24 @@ public class TennisGameTest {
         assertEquals("thirty-forty", scores.get(5));
         assertEquals("deuce", scores.get(6));
         assertEquals("Frederer-won", scores.get(7));
+    }
+
+    @Test
+    public void scoresShouldContainPlayer1WonWhenNoOfWinsAfterFortyIs5ForPlayer1And3ForPlayer2() {
+        addPointPairsToGameRequest();
+        playerOne.setNoOfWinsAfterForty(5);
+        playerTwo.setNoOfWinsAfterForty(3);
+        scoreBoard = game.getScoreBoard(gameRequest);
+        scores = scoreBoard.getPoints();
+
+        assertEquals("love-all", scores.get(0));
+        assertEquals("fifteen-love", scores.get(1));
+        assertEquals("fifteen-all", scores.get(2));
+        assertEquals("fifteen-thirty", scores.get(3));
+        assertEquals("thirty-all", scores.get(4));
+        assertEquals("thirty-forty", scores.get(5));
+        assertEquals("deuce", scores.get(6));
+        assertEquals("Nadal-won", scores.get(7));
     }
 
     private void addPointPairsToGameRequest() {
