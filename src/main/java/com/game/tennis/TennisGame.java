@@ -15,9 +15,7 @@ class TennisGame {
     }
 
     private String getScoreBoard(Score playerOneScore, Score playerTwoScore) {
-
         return getScoreText(playerOneScore, playerTwoScore);
-
     }
 
     private String getScoreText(Score score1, Score score2) {
@@ -62,7 +60,7 @@ class TennisGame {
         Player playerTwo = gameRequest.getPlayerTwo();
 
         int playerOneLeadDifference = playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty();
-        String gameStatus = getCurrentGameStatus(playerOneLeadDifference);
+        String gameStatus = getCurrentGameStatus(playerOneLeadDifference, gameRequest);
 
         if (gameStatus == null) {
             throw new IllegalArgumentException("Lead by value is invalid for one of the player");
@@ -71,19 +69,22 @@ class TennisGame {
         points.add(gameStatus);
     }
 
-    private String getCurrentGameStatus(int playerOneLeadDifference) {
+    private String getCurrentGameStatus(int playerOneLeadDifference, GameRequest gameRequest) {
         String pointText = null;
+        Player playerOne = gameRequest.getPlayerOne();
+        Player playerTwo = gameRequest.getPlayerTwo();
+
         if (playerOneLeadDifference == 2) {
-            pointText = "Nadal-won";
+            pointText = playerOne.getName() + "-" + "won";
         } else if (playerOneLeadDifference == -2) {
-            pointText = "Frederer-won";
+            pointText = playerTwo.getName() + "-" + "won";
         } else if (playerOneLeadDifference == 0) {
             pointText = "deuce";
         } else if (playerOneLeadDifference == 1) {
-            pointText = "Nadal-advantage";
+            pointText = playerOne.getName() + "-" + "advantage";
         } else {
             if (playerOneLeadDifference == -1) {
-                pointText = "Frederer-advantage";
+                pointText = playerTwo.getName() + "-" + "advantage";
             }
         }
 

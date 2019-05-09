@@ -33,6 +33,9 @@ public class TennisGameTest {
         playerOne = new Player();
         playerTwo = new Player();
 
+        playerOne.setName("Nadal");
+        playerTwo.setName("Frederer");
+
         gameRequest.setPlayers(playerOne, playerTwo);
     }
 
