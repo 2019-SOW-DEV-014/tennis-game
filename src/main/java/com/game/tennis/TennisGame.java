@@ -58,11 +58,21 @@ class TennisGame {
     }
 
     private void addPointsFromGameBallIfAny(List<String> points, GameRequest gameRequest) {
-        String pointText = null;
         Player playerOne = gameRequest.getPlayerOne();
         Player playerTwo = gameRequest.getPlayerTwo();
 
         int playerOneLeadDifference = playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty();
+        String gameStatus = getCurrentGameStatus(playerOneLeadDifference);
+
+        if (gameStatus == null) {
+            throw new IllegalArgumentException("Lead by value is invalid for one of the player");
+        }
+
+        points.add(gameStatus);
+    }
+
+    private String getCurrentGameStatus(int playerOneLeadDifference) {
+        String pointText = null;
         if (playerOneLeadDifference == 2) {
             pointText = "Nadal-won";
         } else if (playerOneLeadDifference == -2) {
@@ -77,7 +87,7 @@ class TennisGame {
             }
         }
 
-        points.add(pointText);
+        return pointText;
     }
 
     private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {

@@ -4,7 +4,9 @@ import com.game.tennis.model.input.GameRequest;
 import com.game.tennis.model.input.Player;
 import com.game.tennis.model.output.ScoreBoard;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
@@ -13,6 +15,9 @@ import static com.game.tennis.util.Pair.asPair;
 import static org.junit.Assert.assertEquals;
 
 public class TennisGameTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private TennisGame game;
     private GameRequest gameRequest;
@@ -184,6 +189,18 @@ public class TennisGameTest {
         assertEquals("thirty-forty", scores.get(5));
         assertEquals("deuce", scores.get(6));
         assertEquals("Nadal-won", scores.get(7));
+    }
+
+    @Test
+    public void pointsShouldThrowIllegalArgumentExceptionWhenLeadDifferenceIsGreaterThan2() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Lead by value is invalid for one of the player");
+
+        addPointPairsToGameRequest();
+        playerOne.setNoOfWinsAfterForty(6);
+        playerTwo.setNoOfWinsAfterForty(3);
+        scoreBoard = game.getScoreBoard(gameRequest);
+        scores = scoreBoard.getPoints();
     }
 
     private void addPointPairsToGameRequest() {
