@@ -63,7 +63,9 @@ class TennisGame {
         Player playerTwo = gameRequest.getPlayerTwo();
 
         int playerOneLeadDifference = playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty();
-        if (playerOneLeadDifference == 0) {
+        if (playerOneLeadDifference == -2) {
+            pointText = "Frederer-won";
+        } else if (playerOneLeadDifference == 0) {
             pointText = "deuce";
         } else if (playerOneLeadDifference == 1) {
             pointText = "Nadal-advantage";
