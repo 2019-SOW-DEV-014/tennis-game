@@ -1,0 +1,10 @@
+# IntelliJ files #
+##################
+
+*.iml
+.idea
+
+# Build generated files #
+#########################
+
+target
