@@ -14,6 +14,27 @@ class TennisGame {
     TennisGame() {
     }
 
+    public ScoreBoard getScoreBoard(GameRequest gameRequest) {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        List<String> scores = new ArrayList<String>();
+        List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
+
+        addPointsTillGameBall(scores, scorePairs);
+        addPointsFromDeuceIfAny(scores, gameRequest);
+
+        scoreBoard.setPoints(scores);
+
+        return scoreBoard;
+    }
+
+    private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {
+
+        for (Pair<Score, Score> scorePair : scorePairs) {
+            String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
+            scores.add(scoreText);
+        }
+    }
+
     private String getScoreBoard(Score playerOneScore, Score playerTwoScore) {
         return getScoreText(playerOneScore, playerTwoScore);
     }
@@ -34,28 +55,15 @@ class TennisGame {
         return score1Text + "-" + score2Text;
     }
 
-    private boolean isDeuce(Score score) {
-        return score.getValue() == Score.forty.getValue();
-    }
-
     private boolean isScoresOnLevel(int playerOneScore, int playerTwoScore) {
         return playerOneScore == playerTwoScore;
     }
 
-    public ScoreBoard getScoreBoard(GameRequest gameRequest) {
-        ScoreBoard scoreBoard = new ScoreBoard();
-        List<String> scores = new ArrayList<String>();
-        List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
-
-        addPointsTillGameBall(scores, scorePairs);
-        addPointsFromGameBallIfAny(scores, gameRequest);
-
-        scoreBoard.setPoints(scores);
-
-        return scoreBoard;
+    private boolean isDeuce(Score score) {
+        return score.getValue() == Score.forty.getValue();
     }
 
-    private void addPointsFromGameBallIfAny(List<String> points, GameRequest gameRequest) {
+    private void addPointsFromDeuceIfAny(List<String> points, GameRequest gameRequest) {
         Player playerOne = gameRequest.getPlayerOne();
         Player playerTwo = gameRequest.getPlayerTwo();
 
@@ -89,13 +97,5 @@ class TennisGame {
         }
 
         return pointText;
-    }
-
-    private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {
-
-        for (Pair<Score, Score> scorePair : scorePairs) {
-            String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
-            scores.add(scoreText);
-        }
     }
 }
