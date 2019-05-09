@@ -2,6 +2,7 @@ package com.game.tennis;
 
 import com.game.tennis.constants.Score;
 import com.game.tennis.model.input.GameRequest;
+import com.game.tennis.model.output.ScoreBoard;
 import com.game.tennis.util.Pair;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ class TennisGame {
     TennisGame() {
     }
 
-    private String scoreBoard(Score playerOneScore, Score playerTwoScore) {
+    private String getScoreBoard(Score playerOneScore, Score playerTwoScore) {
 
         return getScoreText(playerOneScore, playerTwoScore);
 
@@ -42,14 +43,18 @@ class TennisGame {
         return playerOneScore == playerTwoScore;
     }
 
-    public List<String> scoreBoard(GameRequest gameRequest) {
-        List<String> scoreBoardResult = new ArrayList<String>();
+    public ScoreBoard getScoreBoard(GameRequest gameRequest) {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        List<String> scores = new ArrayList<String>();
         List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
 
         for (Pair<Score, Score> scorePair : scorePairs) {
-            String scoreText = scoreBoard(scorePair.getFirst(), scorePair.getSecond());
-            scoreBoardResult.add(scoreText);
+            String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
+            scores.add(scoreText);
         }
-        return scoreBoardResult;
+
+        scoreBoard.setPoints(scores);
+
+        return scoreBoard;
     }
 }
