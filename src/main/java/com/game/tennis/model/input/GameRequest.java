@@ -8,17 +8,12 @@ import java.util.List;
 
 public class GameRequest {
 
-    private Pair<Score, Score> scorePair;
     private Player playerOne;
     private Player playerTwo;
     private final List<Pair<Score, Score>> scorePairs;
 
     public GameRequest() {
         scorePairs = new ArrayList<Pair<Score, Score>>();
-    }
-
-    public void setScorePair(Pair<Score, Score> scorePair) {
-        this.scorePair = scorePair;
     }
 
     public void setPlayers(Player playerOne, Player playerTwo) {
