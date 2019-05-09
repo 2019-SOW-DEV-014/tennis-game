@@ -7,9 +7,11 @@ import com.game.tennis.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TennisGame {
+class TennisGame {
 
-    public String scoreBoard(Score playerOneScore, Score playerTwoScore) {
+    TennisGame(){}
+
+    private String scoreBoard(Score playerOneScore, Score playerTwoScore) {
 
         return getScoreText(playerOneScore, playerTwoScore);
 
