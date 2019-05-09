@@ -105,7 +105,27 @@ public class TennisGameTest {
     }
 
     @Test
-    public void scoresShouldContainPlayer2AdvantageWhenNoOfWinsAfterFortyIs1ForPlayer2() {
+    public void scoresShouldContainPlayer1WinWhenNoOfWinsAfterFortyIs1ForPlayer1AndPlayer2ScoreIs15() {
+        gameRequest.addScorePair(asPair(love, love));
+        gameRequest.addScorePair(asPair(fifteen, love));
+        gameRequest.addScorePair(asPair(fifteen, fifteen));
+        gameRequest.addScorePair(asPair(thirty, fifteen));
+        gameRequest.addScorePair(asPair(forty, fifteen));
+        playerOne.setNoOfWinsAfterForty(1);
+        playerTwo.setNoOfWinsAfterForty(0);
+        scoreBoard = game.getScoreBoard(gameRequest);
+        scores = scoreBoard.getPoints();
+
+        assertEquals("love-all", scores.get(0));
+        assertEquals("fifteen-love", scores.get(1));
+        assertEquals("fifteen-all", scores.get(2));
+        assertEquals("thirty-fifteen", scores.get(3));
+        assertEquals("forty-fifteen", scores.get(4));
+        assertEquals("Nadal-won", scores.get(5));
+    }
+
+    @Test
+    public void scoresShouldContainPlayer2WinWhenNoOfWinsAfterFortyIs1ForPlayer2AndPlayer1ScoreIs30() {
         gameRequest.addScorePair(asPair(love, love));
         gameRequest.addScorePair(asPair(love, fifteen));
         gameRequest.addScorePair(asPair(love, thirty));
@@ -119,7 +139,7 @@ public class TennisGameTest {
         assertEquals("love-fifteen", scores.get(1));
         assertEquals("love-thirty", scores.get(2));
         assertEquals("love-forty", scores.get(3));
-        assertEquals("Frederer-advantage", scores.get(4));
+        assertEquals("Frederer-won", scores.get(4));
     }
 
     @Test

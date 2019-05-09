@@ -9,6 +9,8 @@ import com.game.tennis.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.game.tennis.constants.Score.forty;
+
 class TennisGame {
 
     TennisGame() {
@@ -60,7 +62,7 @@ class TennisGame {
     }
 
     private boolean isDeuce(Score score) {
-        return score.getValue() == Score.forty.getValue();
+        return score.getValue() == forty.getValue();
     }
 
     private void addPointsFromDeuceIfAny(List<String> points, GameRequest gameRequest) {
@@ -82,20 +84,36 @@ class TennisGame {
         Player playerOne = gameRequest.getPlayerOne();
         Player playerTwo = gameRequest.getPlayerTwo();
 
-        if (playerOneLeadDifference == 2) {
+        Pair<Score, Score> lastScorePair = gameRequest.getScorePairs().get(gameRequest.getScorePairs().size() - 1);
+        boolean hasPlayerOneScoredForty = lastScorePair.getFirst().equals(forty);
+        boolean hasPlayerTwoScoredForty = lastScorePair.getSecond().equals(forty);
+
+        if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 2 ||
+                (hasPlayerOneScoredForty && !hasPlayerTwoScoredForty
+                        && (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1))) {
             pointText = playerOne.getName() + "-" + "won";
-        } else if (playerOneLeadDifference == -2) {
+        } else if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 2 ||
+                (!hasPlayerOneScoredForty && hasPlayerTwoScoredForty
+                        && (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1))) {
             pointText = playerTwo.getName() + "-" + "won";
-        } else if (playerOneLeadDifference == 0) {
+        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 0) {
             pointText = "deuce";
-        } else if (playerOneLeadDifference == 1) {
+        } else if (playerOne.getNoOfWinsAfterForty() - playerTwo.getNoOfWinsAfterForty() == 1) {
             pointText = playerOne.getName() + "-" + "advantage";
         } else {
-            if (playerOneLeadDifference == -1) {
+            if (playerTwo.getNoOfWinsAfterForty() - playerOne.getNoOfWinsAfterForty() == 1) {
                 pointText = playerTwo.getName() + "-" + "advantage";
             }
         }
 
         return pointText;
+    }
+
+    private boolean isPlayerTwoWinner(int playerOneLeadDifference) {
+        return playerOneLeadDifference == -2;
+    }
+
+    private boolean isPlayerOneWinner(int playerOneLeadDifference) {
+        return playerOneLeadDifference == 2;
     }
 }
