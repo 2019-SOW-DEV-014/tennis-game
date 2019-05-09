@@ -48,13 +48,23 @@ class TennisGame {
         List<String> scores = new ArrayList<String>();
         List<Pair<Score, Score>> scorePairs = gameRequest.getScorePairs();
 
-        for (Pair<Score, Score> scorePair : scorePairs) {
-            String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
-            scores.add(scoreText);
-        }
+        addPointsTillGameBall(scores, scorePairs);
+        addPointsFromGameBallIfAny(scores);
 
         scoreBoard.setPoints(scores);
 
         return scoreBoard;
+    }
+
+    private void addPointsFromGameBallIfAny(List<String> points) {
+        points.add("Frederer-advantage");
+    }
+
+    private void addPointsTillGameBall(List<String> scores, List<Pair<Score, Score>> scorePairs) {
+
+        for (Pair<Score, Score> scorePair : scorePairs) {
+            String scoreText = getScoreBoard(scorePair.getFirst(), scorePair.getSecond());
+            scores.add(scoreText);
+        }
     }
 }
