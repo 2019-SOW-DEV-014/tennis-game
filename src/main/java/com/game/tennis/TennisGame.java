@@ -30,7 +30,7 @@ class TennisGame {
         boolean hasPlayerOneScoredForty = lastScorePair.getFirst().equals(forty);
         boolean hasPlayerTwoScoredForty = lastScorePair.getSecond().equals(forty);
         if ((hasPlayerOneScoredForty || hasPlayerTwoScoredForty) && !(playerOne.getNoOfWinsAfterForty() == 0 && playerTwo.getNoOfWinsAfterForty() == 0)) {
-            addPointsFromDeuceIfAny(scores, gameRequest);
+            decidePlayerAdvantageOrWinnerAndAddToPoints(scores, gameRequest);
         }
 
         scoreBoard.setPoints(scores);
@@ -73,7 +73,7 @@ class TennisGame {
         return score.getValue() == forty.getValue();
     }
 
-    private void addPointsFromDeuceIfAny(List<String> points, GameRequest gameRequest) {
+    private void decidePlayerAdvantageOrWinnerAndAddToPoints(List<String> points, GameRequest gameRequest) {
         String gameStatus = getCurrentGameStatus(gameRequest);
 
         if (gameStatus == null) {
